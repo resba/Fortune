@@ -47,6 +47,8 @@ public class Wheel extends Loggable {
         guessedLetters = new ArrayList<String>();
         guessedAnswer = false;
         guessedLetters.add(" ");
+        guessedLetters.add("'");
+        guessedLetters.add("&");
         this.word = generator.getRandomWord();
         this.category = generator.getCategory();
     }
@@ -112,8 +114,12 @@ public class Wheel extends Loggable {
         String[] wordLookup = this.word.toLowerCase().split("");
         for (int i = 0; i < wordLookup.length; i++) {
             if(guessedLetters.contains(wordLookup[i]) == false){
-                if(wordLookup[i] == " "){
+                if(wordLookup[i] == " ") {
                     wordLookup[i] = " ";
+                } else if (wordLookup[i] == "'"){
+                    wordLookup[i] = "'";
+                } else if (wordLookup[i] == "&"){
+                    wordLookup[i] = "&";
                 } else {
                     wordLookup[i] = "*";
                 }
