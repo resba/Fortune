@@ -77,7 +77,6 @@ public class RoundState implements GameState {
                                     this.draw(new String[]{"You've earned a Free Spin! Guess a Letter: "});
                                     currentPlayer.addFreeSpin();
                                     freeSpin = true;
-                                    break;
                                 default:
                                     if(spin != "F") {
                                         this.draw(new String[]{"$" + spin + "! Guess a Letter: "});
