@@ -74,7 +74,7 @@ public class RoundState implements GameState {
                     try {
                         playerChoice = Integer.parseInt(playerEntry.nextLine());
                     }catch(NumberFormatException e){
-
+                        System.out.println("What?");
                     }
                     switch(playerChoice){
                         case 3:
