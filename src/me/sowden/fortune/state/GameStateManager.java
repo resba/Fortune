@@ -5,6 +5,7 @@ import me.sowden.fortune.Entity.Wheel;
 import me.sowden.fortune.game.RoundState;
 import me.sowden.fortune.util.Loggable;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -43,7 +44,7 @@ public class GameStateManager extends Loggable {
         return false;
     }
 
-    public void setState(String name){
+    public void setState(String name) throws IOException {
         if(currentState != null){
             currentState.stop();
         }

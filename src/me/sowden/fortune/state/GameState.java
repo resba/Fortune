@@ -1,9 +1,11 @@
 package me.sowden.fortune.state;
 
+import java.io.IOException;
+
 public interface GameState {
     String getName();
     String checkForStateChange();
-    void start();
+    void start() throws IOException;
     void stop();
     void update(long elapsedTime);
     void draw(String[] lines);

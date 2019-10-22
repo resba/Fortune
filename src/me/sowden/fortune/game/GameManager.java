@@ -5,6 +5,8 @@ import me.sowden.fortune.Entity.Wheel;
 import me.sowden.fortune.state.GameStateManager;
 import me.sowden.fortune.util.Loggable;
 
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class GameManager extends Loggable {
@@ -12,7 +14,7 @@ public class GameManager extends Loggable {
     private ArrayList<Player> players;
     private GameStateManager manager;
 
-    public GameManager() {
+    public GameManager() throws FileNotFoundException {
         players = new ArrayList<Player>();
         wheel = new Wheel();
         manager = new GameStateManager();
@@ -34,8 +36,8 @@ public class GameManager extends Loggable {
      * 2 = Round 3
      */
 
-    public void run(){
-        String[] states = {"start","round","finalRound","victory"};
+    public void run() throws IOException {
+        String[] states = {"start","round1","round2","final_round","victory"};
         boolean done = false;
         manager.addState(new StartGameState(players,wheel));
         manager.addState(new RoundState(players,wheel,"1"));
