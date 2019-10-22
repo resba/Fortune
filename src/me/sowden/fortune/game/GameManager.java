@@ -37,11 +37,12 @@ public class GameManager extends Loggable {
      */
 
     public void run() throws IOException {
-        String[] states = {"start","round1","round2","final_round","victory"};
+        String[] states = {"start","round1","round2","round3","victory"};
         boolean done = false;
         manager.addState(new StartGameState(players,wheel));
         manager.addState(new RoundState(players,wheel,"1"));
         manager.addState(new RoundState(players,wheel,"2"));
+        manager.addState(new RoundState(players,wheel,"3"));
         while(done != true){
             for (int i = 0; i < states.length - 1; i++) {
                 if (manager.isHardDone()) {

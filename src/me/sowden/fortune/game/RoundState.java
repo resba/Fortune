@@ -52,7 +52,13 @@ public class RoundState implements GameState {
                     int playerChoice = playerEntry.nextInt();
                     switch(playerChoice){
                         case 3:
-                            //todo: guess word
+                            this.draw(new String[] {currentPlayer.getName()+" Enter your Guess:"});
+                            Scanner playerGuessPuzzle = new Scanner(System.in);
+                            String puzzleGuess = playerGuessPuzzle.nextLine();
+                            boolean boolGuess = wheel.guessPuzzle(puzzleGuess);
+                            if(boolGuess == true){
+                                wheel.isComplete(true);
+                            }
                             break;
                         case 2:
                             // todo: buy vowel
