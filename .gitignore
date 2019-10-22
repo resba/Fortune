@@ -196,3 +196,7 @@ doc/script\.js
 doc/stylesheet\.css
 
 *.class
+
+build.number
+
+dist/lib/Fortune-1.0.0.jar
