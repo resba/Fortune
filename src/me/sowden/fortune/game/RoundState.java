@@ -58,7 +58,7 @@ public class RoundState implements GameState {
                             if(boolGuess == true){
                                 wheel.isComplete(true);
                             }else{
-                                System.out.println("Unfortunatly that's not the word! Press Enter to Continue");
+                                System.out.println("Unfortunately that's not the word! Press Enter to Continue");
                                 System.in.read();
                                 turn = false;
                             }
