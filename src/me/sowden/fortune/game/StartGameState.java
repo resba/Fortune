@@ -7,6 +7,7 @@ import me.sowden.fortune.state.GameState;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Random;
 import java.util.Scanner;
 /**
  * 
@@ -45,8 +46,17 @@ public class StartGameState implements GameState {
         //Looking for 1-3
         boolean looper = false;
         Scanner playerEntry = new Scanner(System.in);
+        int playerCount = 1;
         while(looper != true){
-            int playerCount = playerEntry.nextInt();
+            boolean num = false;
+            while(num == false){
+                playerCount = playerEntry.nextInt();
+                if(playerCount >= 1 && playerCount <=3 ){
+                    num=true;
+                }else{
+                    System.out.println("Please enter 1-3.");
+                }
+            }
             if(playerCount == -1){
                 log("Lower Level Exit");
                 looper = true;
@@ -55,11 +65,16 @@ public class StartGameState implements GameState {
                 break;
             }else{
                 log("Entered a Number.");
-                // todo: error handling for NaN
                 for (int i = 0; i != playerCount; i++) {
                     Scanner playerName = new Scanner(System.in);
                     System.out.print("Enter Player "+(i+1)+"'s name: ");
                     String playerNameEntry = playerName.nextLine();
+                    if(playerNameEntry == ""){
+                        System.out.println("We see you haven't chosen a name, so we've picked one for you!");
+                        Random rand = new Random();
+                        String[] names = new String[]{"Aayush Mcdougall", "Courteney Leblanc", "Farzana Wise", "Arissa Barnard", "Tanner Hartman", "Ronald Frost", "Leilani Medrano", "Connie Keeling", "Louise Carr", "Huseyin Browning", "Zayne Dickinson", "Juliette Milne", "Luqman Herman", "Faiza Short", "Lulu Ayala", "Mariah O'Moore", "Paula Corona", "Arran Donaldson", "Tiago Ireland", "Siobhan Farmer"};
+                        playerNameEntry = names[rand.nextInt(names.length)];
+                    }
                     Player p = new Player(playerNameEntry);
                     System.out.println(g.BLANK_STRING);
                     players.add(p);
