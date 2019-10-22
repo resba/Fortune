@@ -161,6 +161,7 @@ public class RoundState implements GameState {
                                             //e.printStackTrace();
                                             System.out.println("Press Any Key to Continue.");
                                             System.in.read();
+                                            multiplier = -1;
                                             turn = false;
                                             break;
                                         }
@@ -174,6 +175,8 @@ public class RoundState implements GameState {
                                         }
                                         System.in.read();
                                         this.clearScreen();
+                                    } else if(multiplier == -1){
+                                        break;
                                     } else {
                                         this.draw(new String[]{"Yes we have " + multiplier + " of those!", "Press Enter to Continue."});
                                         currentPlayer.addToRoundScore(Integer.parseInt(spin) * multiplier);
