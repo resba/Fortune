@@ -108,7 +108,7 @@ public class GameStateManager extends Loggable {
             if(currentState != null){
                 currentState.start();
             }else {
-                this.log("Could not find game state specified.");
+                this.log("Could not find game state specified. "+name);
             }
         }
     }

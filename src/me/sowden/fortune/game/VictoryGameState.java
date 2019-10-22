@@ -40,6 +40,7 @@ public class VictoryGameState implements GameState {
 
     @Override
     public void start() throws IOException {
+        log("Entering Victory Screen");
         this.clearScreen();
         // check whos won
         int winnerIndex = 0;

@@ -205,7 +205,7 @@ public class RoundState implements GameState {
         }
         this.draw(new String[] {g.OPEN_ARCH,winner.getName()+" Wins the Round!",g.CLOSED_ARCH});
         this.draw(new String[] {g.OPEN_ARCH,"                       Current Grand Totals",g.setPlayersTotalScore(players),g.CLOSED_ARCH});
-        this.draw(new String[] {g.OPEN_ARCH,g.setPlayers(players),g.CLOSED_ARCH,"Press Enter to Continue..."});
+        this.draw(new String[] {"Press Enter to Continue..."});
         System.in.read();
         stop();
     }
