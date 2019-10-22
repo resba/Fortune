@@ -26,7 +26,13 @@
     <mkdir dir="${dist}/lib" />
 
     <!-- Put everything in ${build} into the MyApplication-${version}.${build.number}.jar -->
-    <jar destfile="${dist}/lib/Fortune-${version}.${build.number}.jar" basedir="${build}" />
+    <jar destfile="${dist}/lib/Fortune-${version}.${build.number}.jar" basedir="${build}">
+      <fileset dir="${build}/main/classes"/>
+      <zipfileset includes="**/*.class" src="${dist}/lib/Fortune-${version}.${build.number}.jar"/>
+      <manifest>
+        <attribute name="Main-Class" value="me.sowden.fortune.Main"/>
+      </manifest>
+    </jar>
   </target>
 
   <target name="clean" description="clean up">
