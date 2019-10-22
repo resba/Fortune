@@ -8,7 +8,17 @@ import me.sowden.fortune.state.GameState;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * 
+ * StartGameState
+ * 
+ * Contains the State code for the start of the game.
+ *
+ * Detailed comments for overridden functions can be found in me.sowden.fortune.state.GameState
+ * 
+ * @author Matthew Sowden
+ *
+ */
 public class StartGameState implements GameState {
     private ArrayList<Player> players;
     private Wheel wheel;

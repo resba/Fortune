@@ -8,7 +8,21 @@ import me.sowden.fortune.state.GameState;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
-
+/**
+ * 
+ * RoundState
+ * 
+ * The general State containing Game Code.
+ * Upon entering this state, the game will generate
+ * a new word and category as well as set the player
+ * roundScores to 0. Keeping track of players is 
+ * dynamic thanks to the ArrayList.
+ * 
+ * Detailed comments for overridden functions can be found in me.sowden.fortune.state.GameState
+ * 
+ * @author Matthew Sowden
+ *
+ */
 public class RoundState implements GameState {
     private ArrayList<Player> players;
     private Wheel wheel;
@@ -17,6 +31,14 @@ public class RoundState implements GameState {
     private boolean hardEnd = false;
     private String round;
 
+    /**
+     * 
+     * Initializes the Round and Fetches helper classes like Graphics.
+     * 
+     * @param players - The player array list that transits through States
+     * @param wheel - The Wheel entity that transits through States to keep the dictionary loaded once.
+     * @param round - A text unique identifier for the round so the GameManager can predictably load the correct state.
+     */
     public RoundState(ArrayList<Player> players, Wheel wheel, String round) {
         this.players = players;
         this.wheel = wheel;

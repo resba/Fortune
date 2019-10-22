@@ -9,6 +9,17 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+/**
+ * VictoryGameState
+ * 
+ * Contains code for the ending portion of the game.
+ * 
+ * Detailed comments for overridden functions can be found in me.sowden.fortune.state.GameState
+ * 
+ * @author Matthew Sowden
+ *
+ */
+
 public class VictoryGameState implements GameState {
     private ArrayList<Player> players;
     private Wheel wheel;

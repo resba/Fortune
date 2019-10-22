@@ -14,28 +14,34 @@ public class GameManager extends Loggable {
     private ArrayList<Player> players;
     private GameStateManager manager;
 
+    /**
+     * 
+     * GameManager
+     * 
+     * Manages the Game through GameStateManager and initializing all assets
+     * from Player Lists to Wheel Management. Learn more about this from the
+     * run() implementation.
+     * 
+     * @throws FileNotFoundException - For loading in the Wheel() Class when searching for the Dictionary File.
+     */
     public GameManager() throws FileNotFoundException {
         players = new ArrayList<Player>();
         wheel = new Wheel();
         manager = new GameStateManager();
     }
 
+    
     /**
-     * Implemented Game States:
-     * START = Newly Initialized
-     * PLAYER_ENTRY = Enter Player Names
-     * PICK_WORD = Pick A Word/Category Combo at Random
-     * ROUND = In Round
+     * 
+     * run
+     * 
+     * Executes the game loop. Sets up the strings for GameState searches and adds
+     * the prerequisite number of rounds as well as the start and end states to the
+     * GameStateManager. The Manager sets up the states, and the states collect the
+     * user input for the game.
+     * 
+     * @throws IOException
      */
-
-    /**
-     * Rounds:
-     * -1 = Game Setup
-     * 0 = Round 1
-     * 1 = Round 2
-     * 2 = Round 3
-     */
-
     public void run() throws IOException {
         String[] states = {"start","round1","round2","round3","victory"};
         boolean done = false;
@@ -55,11 +61,5 @@ public class GameManager extends Loggable {
             done = true;
             log(players.toString());
         }
-    }
-
-    public void clearScreen(){
-        System.out.print("\033[H\033[2J");
-        System.out.flush();
-        this.log("Cleared Screen.");
     }
 }
