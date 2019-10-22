@@ -194,3 +194,5 @@ doc/package-list
 doc/script\.js
 
 doc/stylesheet\.css
+
+*.class
