@@ -7,6 +7,7 @@ import me.sowden.fortune.state.GameState;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Random;
 import java.util.Scanner;
 /**
@@ -45,12 +46,19 @@ public class StartGameState implements GameState {
         this.draw(new String[] {g.OPEN_ARCH,g.BLANK_STRING,g.BLANK_STRING,"Welcome to Wheel of Fortune!",g.BLANK_STRING,"How Many Players?",g.BLANK_STRING,g.BLANK_STRING,g.CLOSED_ARCH,"Enter 1-3, or type -1 to exit."});
         //Looking for 1-3
         boolean looper = false;
-        Scanner playerEntry = new Scanner(System.in);
+
         int playerCount = 1;
         while(looper != true){
+            Scanner playerEntry = new Scanner(System.in);
             boolean num = false;
             while(num == false){
-                playerCount = playerEntry.nextInt();
+                try {
+                    playerCount = Integer.parseInt(playerEntry.nextLine());
+
+                }catch(NumberFormatException e) {
+                    playerCount = 0;
+                    playerEntry.reset();
+                }
                 if(playerCount >= 1 && playerCount <=3 ){
                     num=true;
                 }else{
