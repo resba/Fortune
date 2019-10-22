@@ -70,7 +70,12 @@ public class RoundState implements GameState {
                     this.draw(new String[] {g.OPEN_ARCH,g.setPlayers(players),g.CLOSED_ARCH});
                     this.draw(new String[] {currentPlayer.getName()+" what do you want to do?","1: Spin, 2: Buy Vowel, 3: Guess Word"});
                     Scanner playerEntry = new Scanner(System.in);
-                    int playerChoice = playerEntry.nextInt();
+                    int playerChoice = 0;
+                    try {
+                        playerChoice = Integer.parseInt(playerEntry.nextLine());
+                    }catch(NumberFormatException e){
+
+                    }
                     switch(playerChoice){
                         case 3:
                             this.draw(new String[] {currentPlayer.getName()+" Enter your Guess:"});
@@ -138,29 +143,39 @@ public class RoundState implements GameState {
                                     }else{
                                         spin = "250";
                                     }
-                                    Scanner playerEntry2 = new Scanner(System.in);
-                                    String guess = playerEntry2.nextLine();
+
                                     int multiplier = 0;
-                                    try {
-                                        multiplier = wheel.guessLetter(guess,false);
-                                    } catch (Exception e) {
-                                        System.out.println(e.getMessage());
-                                        System.out.println("Press Any Key to Continue.");
-                                        System.in.read();
-                                        turn = false;
-                                        break;
+                                    boolean moveOn = false;
+                                    while(moveOn == false) {
+                                        Scanner playerEntry2 = new Scanner(System.in);
+                                        String guess = playerEntry2.nextLine();
+                                        moveOn = true;
+                                        try {
+                                            multiplier = wheel.guessLetter("" + guess.charAt(0), false);
+                                        } catch (StringIndexOutOfBoundsException e) {
+                                            System.out.println("You did not enter a guess.");
+                                            System.out.println("Please Guess a Letter.");
+                                            moveOn = false;
+                                        } catch (Exception e) {
+                                            System.out.println(e.getMessage());
+                                            //e.printStackTrace();
+                                            System.out.println("Press Any Key to Continue.");
+                                            System.in.read();
+                                            turn = false;
+                                            break;
+                                        }
                                     }
-                                    if(multiplier == 0){
+                                    if (multiplier == 0) {
                                         this.draw(new String[]{"Sorry! That letter isn't in here! Press Enter to Continue."});
-                                        if(freeSpin){
+                                        if (freeSpin) {
                                             freeSpin = false;
-                                        }else{
+                                        } else {
                                             turn = false;
                                         }
                                         System.in.read();
                                         this.clearScreen();
-                                    }else{
-                                        this.draw(new String[]{"Yes we have "+multiplier+" of those!","Press Enter to Continue."});
+                                    } else {
+                                        this.draw(new String[]{"Yes we have " + multiplier + " of those!", "Press Enter to Continue."});
                                         currentPlayer.addToRoundScore(Integer.parseInt(spin) * multiplier);
                                         freeSpin = false;
                                         System.in.read();
@@ -168,6 +183,8 @@ public class RoundState implements GameState {
                                     }
                             }
                             break;
+                        case 0:
+                            this.draw(new String[]{"Please enter 1-3."});
                         case -1:
                             turn = false;
                             break;
