@@ -30,20 +30,19 @@ public class RoundState implements GameState {
     }
 
     @Override
-    public String checkForStateChange() {
-        return null;
-    }
-
-    @Override
     public void start() throws IOException {
         this.clearScreen();
         this.log("Round "+round);
         wheel.setWord();
+        int winningPlayer = 0;
         while(wheel.isComplete() == false){
             for (int i = 0; i < players.size(); i++) {
                 this.clearScreen();
                 boolean turn = true;
                 while(turn){
+                    if(wheel.isComplete()) {
+                        break;
+                    }
                     Player currentPlayer = players.get(i);
                     this.draw(new String[] {g.OPEN_ARCH,g.BLANK_STRING,g.BLANK_STRING,wheel.maskedWord(),g.BLANK_STRING,g.BLANK_STRING,g.setCategory(wheel.getCategory()),g.CLOSED_ARCH});
                     this.draw(new String[] {g.OPEN_ARCH,g.setPlayers(players),g.CLOSED_ARCH});
@@ -55,16 +54,44 @@ public class RoundState implements GameState {
                             this.draw(new String[] {currentPlayer.getName()+" Enter your Guess:"});
                             Scanner playerGuessPuzzle = new Scanner(System.in);
                             String puzzleGuess = playerGuessPuzzle.nextLine();
-                            boolean boolGuess = wheel.guessPuzzle(puzzleGuess);
+                            boolean boolGuess = wheel.guessPuzzle(puzzleGuess.toLowerCase());
                             if(boolGuess == true){
                                 wheel.isComplete(true);
+                            }else{
+                                System.out.println("Unfortunatly that's not the word! Press Enter to Continue");
+                                System.in.read();
+                                turn = false;
                             }
                             break;
                         case 2:
-                            // todo: buy vowel
+                            if(currentPlayer.canBuyVowel()){
+                                System.out.println("Enter a vowel to buy: ");
+                                Scanner playerEntry2 = new Scanner(System.in);
+                                String guess = playerEntry2.nextLine();
+                                int multiplier = 0;
+                                try {
+                                    multiplier = wheel.guessLetter(guess,true);
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                    System.out.println("Press Any Key to Continue.");
+                                    System.in.read();
+                                    break;
+                                }
+                                if(multiplier > 0){
+                                    this.draw(new String[]{"Yes we have "+multiplier+" of those! You spent $100","Press Enter to Continue."});
+                                    currentPlayer.addToRoundScore(-100);
+                                }else{
+                                    this.draw(new String[]{"Sorry, we don't have any of those. You spent $100","Press Enter to Continue."});
+                                    currentPlayer.addToRoundScore(-100);
+                                    turn = false;
+                                }
+                                System.in.read();
+                            }else{
+                                System.out.println("You don't have enough money to buy a Vowel. Press Enter to Continue.");
+                                System.in.read();
+                            }
                             break;
                         case 1:
-                            // todo: spin
                             String spin = wheel.spinWheel();
                             boolean freeSpin = false;
                             switch(spin){
@@ -95,16 +122,27 @@ public class RoundState implements GameState {
                                     try {
                                         multiplier = wheel.guessLetter(guess,false);
                                     } catch (Exception e) {
-                                        e.printStackTrace();
+                                        System.out.println(e.getMessage());
+                                        System.out.println("Press Any Key to Continue.");
+                                        System.in.read();
+                                        turn = false;
+                                        break;
                                     }
                                     if(multiplier == 0){
                                         this.draw(new String[]{"Sorry! That letter isn't in here! Press Enter to Continue."});
-                                        turn = false;
+                                        if(freeSpin){
+                                            freeSpin = false;
+                                        }else{
+                                            turn = false;
+                                        }
                                         System.in.read();
+                                        this.clearScreen();
                                     }else{
                                         this.draw(new String[]{"Yes we have "+multiplier+" of those!","Press Enter to Continue."});
                                         currentPlayer.addToRoundScore(Integer.parseInt(spin) * multiplier);
+                                        freeSpin = false;
                                         System.in.read();
+                                        this.clearScreen();
                                     }
                             }
                             break;
@@ -114,29 +152,28 @@ public class RoundState implements GameState {
                     }
                     if(wheel.isComplete()){
                         turn = false;
+                        winningPlayer = i;
+                        break;
                     }
                 }
             }
         }
-        this.draw(new String[] {g.OPEN_ARCH,g.setPlayers(players),g.CLOSED_ARCH});
+        this.clearScreen();
+        Player winner = players.get(winningPlayer);
+        winner.winRound();
+        for (int i = 0; i < players.size(); i++) {
+            players.get(i).clearRoundScore();
+        }
+        this.draw(new String[] {g.OPEN_ARCH,winner.getName()+" Wins the Round!",g.CLOSED_ARCH});
+        this.draw(new String[] {g.OPEN_ARCH,"                       Current Grand Totals",g.setPlayersTotalScore(players),g.CLOSED_ARCH});
+        this.draw(new String[] {g.OPEN_ARCH,g.setPlayers(players),g.CLOSED_ARCH,"Press Enter to Continue..."});
+        System.in.read();
         stop();
     }
 
     @Override
     public void stop() {
         this.done = true;
-    }
-
-    @Override
-    public void update(long elapsedTime) {
-
-    }
-
-    @Override
-    public void draw(String[] lines) {
-        for (int i = 0; i < lines.length; i++) {
-            System.out.println(lines[i]);
-        }
     }
 
     @Override

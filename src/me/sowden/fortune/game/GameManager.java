@@ -43,6 +43,7 @@ public class GameManager extends Loggable {
         manager.addState(new RoundState(players,wheel,"1"));
         manager.addState(new RoundState(players,wheel,"2"));
         manager.addState(new RoundState(players,wheel,"3"));
+        manager.addState(new VictoryGameState(players,wheel));
         while(done != true){
             for (int i = 0; i < states.length - 1; i++) {
                 if (manager.isHardDone()) {

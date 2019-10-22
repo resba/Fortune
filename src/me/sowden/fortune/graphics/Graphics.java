@@ -21,4 +21,10 @@ public class Graphics {
         }
         return "";
     }
+    public String setPlayersTotalScore(ArrayList<Player> players){
+        for (int i = 0; i < players.size(); i++) {
+            System.out.println(players.get(i).getName()+": "+players.get(i).getRoundScore());
+        }
+        return "";
+    }
 }

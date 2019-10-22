@@ -5,6 +5,7 @@ import me.sowden.fortune.Entity.Wheel;
 import me.sowden.fortune.graphics.Graphics;
 import me.sowden.fortune.state.GameState;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -27,12 +28,7 @@ public class StartGameState implements GameState {
     }
 
     @Override
-    public String checkForStateChange() {
-        return null;
-    }
-
-    @Override
-    public void start() {
+    public void start() throws IOException {
         this.clearScreen();
         this.log("Started Game.");
         this.draw(new String[] {g.OPEN_ARCH,g.BLANK_STRING,g.BLANK_STRING,"Welcome to Wheel of Fortune!",g.BLANK_STRING,"How Many Players?",g.BLANK_STRING,g.BLANK_STRING,g.CLOSED_ARCH,"Enter 1-3, or type -1 to exit."});
@@ -68,19 +64,6 @@ public class StartGameState implements GameState {
     @Override
     public void stop() {
         this.done = true;
-    }
-
-    @Override
-    public void update(long elapsedTime) {
-
-    }
-
-    @Override
-    public void draw(String[] lines) {
-        this.clearScreen();
-        for (int i = 0; i < lines.length; i++) {
-            System.out.println(lines[i]);
-        }
     }
 
     @Override

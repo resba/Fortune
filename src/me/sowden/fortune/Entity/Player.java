@@ -25,8 +25,20 @@ public class Player extends Loggable {
     public int getRoundScore(){
         return this.roundScore;
     }
+    public boolean canBuyVowel(){
+        if(this.roundScore >= 100){
+            return true;
+        }
+        return false;
+    }
+    public void winRound(){
+        this.totalScore += this.roundScore;
+    }
     public int getTotalScore(){
         return this.totalScore;
+    }
+    public void clearRoundScore(){
+        this.roundScore = 0;
     }
     public void addFreeSpin(){
         numFreeSpin++;

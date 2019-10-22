@@ -26,6 +26,7 @@ public class Wheel extends Loggable {
         // pick word from generator
         guessedLetters = new ArrayList<String>();
         guessedAnswer = false;
+        guessedLetters.add(" ");
         this.word = generator.getRandomWord();
         this.category = generator.getCategory();
     }
@@ -56,7 +57,13 @@ public class Wheel extends Loggable {
         String[] wordLookup = this.word.toLowerCase().split("");
         for (int i = 0; i < wordLookup.length; i++) {
             if(guessedLetters.contains(wordLookup[i]) == false){
-                wordLookup[i] = "*";
+                if(wordLookup[i] == " "){
+                    wordLookup[i] = " ";
+                } else {
+                    wordLookup[i] = "*";
+                }
+            }else{
+                wordLookup[i] = wordLookup[i].toUpperCase();
             }
         }
         return new String().join(",",wordLookup).replace(",","");
@@ -66,8 +73,14 @@ public class Wheel extends Loggable {
         // todo: guess a letter please.
         boolean guess = false;
         letter = letter.toLowerCase();
+        ArrayList<String> vowels = new ArrayList<String>();
+        vowels.add("a");
+        vowels.add("e");
+        vowels.add("i");
+        vowels.add("o");
+        vowels.add("u");
         if(buyVowel == true){
-            if(letter == "a" || letter == "e" || letter == "i" || letter == "o" || letter == "u"){
+            if(vowels.contains(letter)){
                 // is a vowel.
                 if(isGuessed(letter)){
                     throw new Exception("Letter was already guessed. (Vowel)");
@@ -79,15 +92,24 @@ public class Wheel extends Loggable {
                 throw new Exception("Letter was not a Vowel");
             }
         }else {
-            if (isGuessed(letter.toLowerCase())) {
-                throw new Exception("Letter was already guessed.");
-            } else {
-                //letter was not guessed
-                guess = true;
+            if(vowels.contains(letter)){
+                throw new Exception("Letter is a Vowel and was not bought.");
+            }else {
+                if (isGuessed(letter.toLowerCase())) {
+                    throw new Exception("Letter was already guessed.");
+                } else {
+                    //letter was not guessed
+                    guess = true;
+                }
             }
         }
         if(guess){
             // check against
+            if(vowels.contains(letter)){
+                if(buyVowel==false) {
+                    throw new Exception("Letter is a Vowel and was not bought.");
+                }
+            }
             StringSearcher check = new StringSearcher(this.word.toLowerCase());
             guessedLetters.add(letter);
             log("Guessed Letters: "+guessedLetters.toString());
